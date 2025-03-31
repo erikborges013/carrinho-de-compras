@@ -1,4 +1,6 @@
-
+document.getElementById('quantidade').value = 0;
+document.getElementById('valor-total').innerHTML = 'R$ 0';
+document.getElementById('lista-produtos').innerHTML = ' ';
 let produtos = {
     'Fone de ouvido - R$100':{nome: 'Fone de ouvido', precoUnitario: 100, precoTotal: 0},
     'Celular - R$1400': {nome: 'Celular', precoUnitario: 1400, precoTotal: 0},
@@ -14,12 +16,34 @@ function adicionar() {
     let produto = produtos[produtoSelecionado];
     resultado += produto.precoUnitario * quantidadeConvertido;
     console.log(resultado);
+    let listaDeProdutos = document.getElementById('lista-produtos');
 
-    produtos[produtoSelecionado].precoTotal += produtos[produtoSelecionado].precoUnitario * quantidadeConvertido;
-    let listaDeProdutos = document.querySelectorAll('.texto-azul');
-    listaDeProdutos.innerHTML += produto.nome;
 
+console.log(quantidade)
+    produtos[produtoSelecionado].precoTotal = produtos[produtoSelecionado].precoUnitario * quantidadeConvertido;
+
+    if (quantidade === "" || quantidade === null || isNaN(quantidade) || !Number.isInteger(Number(quantidade)) || Number(quantidade) <= 0){
+        alert(`Por favor selecione quantos ${produtos[produtoSelecionado].nome} você deseja.`)
+        
+
+    } else {
+      
+        listaDeProdutos.innerHTML +=  '<section class="carrinho__produtos__produto">' +
+        '<span class="texto-azul">' + quantidadeConvertido + '</span>' + 'x ' + produtos[produtoSelecionado].nome + ' ' + '<span class="texto-azul">' + 'R$' + produtos[produtoSelecionado].precoTotal + '</span>' +
+      '</section>'
+
+    }
     let valorTotal = document.getElementById('valor-total');
-    valorTotal.innerHTML = resultado.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+    valorTotal.innerHTML = 'R$' + resultado.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+
+
+
     //console.log(listaDeProdutos);
+}
+
+function limpar() {
+    document.getElementById('valor-total').innerHTML = 'R$ 0';
+    document.getElementById('lista-produtos').innerHTML = ' ';
+    resultado = 0;
 }
